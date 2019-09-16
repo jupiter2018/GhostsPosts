@@ -1,0 +1,31 @@
+<h1>Welcome to GhostsPosts</h1>
+<hr>
+<form  method="get" style="display:inline-block">
+    <label for="Choices">Filter By:</label>
+    <select name="filterBy">
+        <option value="All" >All</option>
+        <option value="Posts" >Posts</option>
+        <option value="Boasts" >Boasts</option>
+    </select>   <!-- ADDED THIS LINE -->
+    <input type="submit" value="Filter" />   <!-- DELETE name="featured" FROM ORIGINAL CODE -->  
+</form>
+<button><a href="{% url 'addPost' %}" style="text-decoration: none;color:black">Add Post</a></button>
+<button><a href="{% url 'addBoast' %}" style="text-decoration: none;color:black">Add Boast</a></button>
+<h2>Posts</h2>
+<div>
+    {% for post in posts %}
+        <h4>Posted by {{post.author}} on {{post.created}}</h4>
+        <p>{{post.content}}</p>
+        <hr>
+    {% endfor %}
+</div>
+
+<h2>Boasts</h2>
+<div>
+    {% for boast in boasts %}
+        <h4>Posted by {{boast.author}} on {{boast.created}}</h4>
+        <p>{{boast.content}}</p>
+        <hr>
+    {% endfor %}
+</div>
+
