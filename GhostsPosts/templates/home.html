@@ -1,31 +1,51 @@
-<h1>Welcome to GhostsPosts</h1>
+
+<h1>Welcome to GhostsPosts{{timeNow}}</h1>
 <hr>
 <form  method="get" style="display:inline-block">
-    <label for="Choices">Filter By:</label>
-    <select name="filterBy">
+    <label for="filterByChoice">Filter By Choice:</label>
+    <select name="filterByChoice">
         <option value="All" >All</option>
         <option value="Posts" >Posts</option>
         <option value="Boasts" >Boasts</option>
+        <option value="Likes">Likes</option>
     </select>   <!-- ADDED THIS LINE -->
+    
     <input type="submit" value="Filter" />   <!-- DELETE name="featured" FROM ORIGINAL CODE -->  
 </form>
 <button><a href="{% url 'addPost' %}" style="text-decoration: none;color:black">Add Post</a></button>
 <button><a href="{% url 'addBoast' %}" style="text-decoration: none;color:black">Add Boast</a></button>
-<h2>Posts</h2>
-<div>
-    {% for post in posts %}
-        <h4>Posted by {{post.author}} on {{post.created}}</h4>
-        <p>{{post.content}}</p>
-        <hr>
-    {% endfor %}
-</div>
+{% for key in args %}
+<h2>{{key}}</h2>
+    {% if key == "posts" %}
+        <div>
+            {% for post in args.posts %}
+                <h4>Posted by {{post.author}} on {{post.created}}</h4>
+                <p>{{item.content}}</p>
+                <p>Likes:{{post.postlikes}} 
+                    <!-- <form method="post">{% csrf_token %}<button type="submit" value='upvote' name="upvote">Up Vote</button>
+                    </form><form method="post">{% csrf_token %}<button type='submit' value='downvote'name="downvote">Down Vote</button></form> -->
+                    <button><a href="/postlikes/{{post.id}}" style="text-decoration: none;color:black">Up Vote</a></button>
+                    <button><a href="/postdislikes/{{post.id}}" style="text-decoration: none;color:black">Down Vote</a></button>
+                </p>
+                <hr>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if key == "boasts" %}
+    <div>
+        {% for boast in args.boasts %}
+            <h4>Posted by {{boast.author}} on {{boast.created}}</h4>
+            <p>{{boast.content}}</p>
+            <p>Likes:{{boast.boastlikes}} 
+                <button><a href="/boastlikes/{{boast.id}}" style="text-decoration: none;color:black">Up Vote</a></button> 
+                <button><a href="/boastdislikes/{{boast.id}}" style="text-decoration: none;color:black">Down Vote</a></button></p>
+            <hr>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endfor %}
 
-<h2>Boasts</h2>
-<div>
-    {% for boast in boasts %}
-        <h4>Posted by {{boast.author}} on {{boast.created}}</h4>
-        <p>{{boast.content}}</p>
-        <hr>
-    {% endfor %}
-</div>
+
+
+
 

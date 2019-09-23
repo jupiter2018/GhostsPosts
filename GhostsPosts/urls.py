@@ -15,9 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from GhostsPosts.models import Author,Post, Boast
+from GhostsPosts.models import Post, Boast
 from . import views
-admin.site.register(Author)
 admin.site.register(Post)
 admin.site.register(Boast)
 
@@ -27,4 +26,10 @@ urlpatterns = [
     path('',views.index,name='homepage'),
     path('addpost/',views.addPost,name='addPost'),
     path('addboast/',views.addBoast,name='addBoast'),
+    path('postlikes/<int:id>', views.postLikes, name='postLikes'),
+    path('postdislikes/<int:id>', views.postdisLikes, name='postdisLikes'),
+    path('boastlikes/<int:id>/', views.boastLikes, name='boastLikes'),
+    path('boastdislikes/<int:id>/', views.boastdisLikes, name='boastdisLikes'),
+    
+
 ]
